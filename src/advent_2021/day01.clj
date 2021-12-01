@@ -14,16 +14,10 @@
       (mapv util/string->int)))
 
 (defn difference
-  "Provide a difference vector"
+  "Return a difference vector"
   ;; difference :: Vector Num -> Vector Num
   [v]
   (mapv - (rest v) v))
-
-(defn window
-  "Aggregate v as a sliding window of width n with maximal overlap."
-  ;; window :: Int -> Vector Num -> Vector Num
-  [n v]
-  (partition n 1 [0] v))
 
 (defn part1
   [f]
@@ -36,7 +30,7 @@
   [f]
   (->> f
        read-depths
-       (window 3)
+       (partition 3 1 [0]) ;; window of 3 with step of 1
        (mapv (partial apply +))
        difference
        (util/count-if pos?)))

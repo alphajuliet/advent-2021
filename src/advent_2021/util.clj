@@ -24,12 +24,14 @@
   "Number of bits required to store `n`."
   ;; number-of-bits :: Number -> Integer
   [n]
-  (if (zero? n) 0
-      (-> (Math/log n)
-            (/ (Math/log 2))
-            inc
-            Math/floor
-            int)))
+  (if (pos? n)
+    (-> (Math/log n)
+        (/ (Math/log 2))
+        inc
+        Math/floor
+        int)
+    ;; else
+    0))
 
 (defn import-data
   "Import and prepare the data"
@@ -98,7 +100,7 @@
   (map (fn [y] (map f y)) x))
 
 (defn map-kv
-  "Map over a map."
+  "Map f over the values of a map."
   [f coll]
   (reduce-kv (fn [m k v] (assoc m k (f v))) (empty coll) coll))
 
