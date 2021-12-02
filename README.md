@@ -5,8 +5,8 @@ My solutions to the [Advent of Code 2021](https://adventofcode.com/2021).
 ## Commentary
 
 My language of choice, as for 2020, is Clojure, which I am running in Doom Emacs. 
-Clojure is a lisp, it has immutable data, is functional, fast, has an excellent set of
-functions and libraries, and the full Java ecosystem is there if required. 
+Clojure is a Lisp, it has immutable data, is very functional, fast, has an excellent set of
+built-in and external functions and libraries, and the full Java ecosystem is always there if you need it. 
 I've also brought my little toolbox of simple utils from 2020 along to save some time.
 
 ### Day 1
@@ -14,6 +14,12 @@ I've also brought my little toolbox of simple utils from 2020 along to save some
 A little warm-up: calculate a simple difference vector and count the positive
 entries in part 1, and then aggregate instead with a moving window in part 2.
 For the windowing we have the `partition` function.
+
+### Day 2
+
+We implement a little state machine to track our position according to a list of instructions.
+Once we've parsed the input the transitions themselves are very basic in part 1, and fractionally less so in part 2. 
+As my little challenge, I've crammed in a couple more lambda functions rather than creating separate definitions.
 
 ## License
 
