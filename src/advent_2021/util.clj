@@ -18,7 +18,17 @@
   (remove #(= % elt) coll))
 
 ;; Transpose a list of lists
-(def T (partial apply map list))
+(def T (partial apply mapv vector))
+
+(defn binv->dec
+  "Convert a binary vector to decimal"
+  [v]
+  (Integer/parseInt (str/join "" v) 2))
+
+(defn ones-complement
+  "Flip the bits in a binary vector"
+  [v]
+  (mapv #(if (= % 1) 0 1) v))
 
 (defn number-of-bits
   "Number of bits required to store `n`."

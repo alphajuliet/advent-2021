@@ -7,7 +7,9 @@ My solutions to the [Advent of Code 2021](https://adventofcode.com/2021).
 My language of choice, as for 2020, is Clojure, which I am running in Doom Emacs. 
 Clojure is a Lisp, it has immutable data, is very functional, fast, has an excellent set of
 built-in and external functions and libraries, and the full Java ecosystem is always there if you need it. 
-I've also brought my little toolbox of simple utils from 2020 along to save some time.
+
+I've brought my little toolbox of simple utils from 2020 along to save some time. 
+I also expect to need some graphs, combinatorics, parsing, and matrix manipulation along the way, so I have the `ubergraph`, `math.combinatorics`, `instaparse`, and `core.matrix` libraries respectively on standby.
 
 ### Day 1
 
@@ -20,6 +22,14 @@ For the windowing we have the `partition` function.
 We implement a little state machine to track our position according to a list of instructions.
 Once we've parsed the input the transitions themselves are very basic in part 1, and fractionally less so in part 2. 
 As my little challenge, I've crammed in a couple more lambda functions rather than creating separate definitions.
+
+### Day 3
+
+This is a problem where an array language like J or APL would have been more elegant than Clojure in filtering rows in a matrix based on most or least common bit values in columns etc. but my J skills are nowhere near up to the task. 
+That's something for a long rainy day to crank through.
+Here, part 1 was pretty trivial, but part 2 involved some more complicated logic and some sequential filtering to get the answer.
+However, like in Day 2, I got to use my favourite `map` and `reduce`; a day without using a `for` loop is a good day.
+I refactored my solution a little at the end to make it more attractive but it's still a little clunkier than I'd like it. 
 
 ## License
 
