@@ -5,6 +5,10 @@
 ;;--------------------------------
 (defn swap [f x y] (f y x))
 
+(defn third
+  [coll]
+  (nth coll 2))
+
 ;; filter-if :: ∀ a. List Boolean -> List a -> List a
 (defn filter-if
   "Filter c2 according to the truth of the corresponding element in c1.
