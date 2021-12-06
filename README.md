@@ -31,6 +31,18 @@ Here, part 1 was pretty trivial, but part 2 involved some more complicated logic
 However, like in Day 2, I got to use my favourite `map` and `reduce`; a day without using a `for` loop is a good day.
 I refactored my solution a little at the end to make it more attractive but it's still a little clunkier than I'd like it. 
 
+### Day 4
+
+Sometimes in these puzzles you can see a shortcut to solving the problem, in others you just have to grind out the solution. This is one of those. 
+Part 1 is pretty tough, or at least the way I did it. The game of bingo is easy enough, but the scoring calculation requires keeping track of a bunch more information that became painful. Also, finding if there is a filled row or column doesn't lend itself to a nifty one-liner. Maybe I just picked the wrong data representation.
+
+I'm really close to the answer in part 2. I can get down to the finding the second-last winning board, but haven't quite got the final one. There is some subtle error in my code that is holding me back. I am putting this one on hold, and maybe I'll come back to it.
+
+### Day 5
+
+Finding overlapping points between different line segments in 2D integer space is a nice little puzzle once you've parsed the input into endpoints. 
+I could also leverage some code I used in Advent 2019 to solve Part 1.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
