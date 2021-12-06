@@ -25,7 +25,7 @@
        (partition 5)))
 
 (defn read-game
-  "Read in the game data"
+  "Read in the initial game data"
   [f]
   (let [vs (->> f
                 util/import-data
@@ -51,35 +51,37 @@
        (map first)))
 
 (defn check-rows
-  "Count the filled rows across the boards"
+  "Count the filled rows across the given locations.
+  Return the matching locations if a row is filled."
   [locations nboards]
   (let [counts (for [b (range nboards)
                      r (range 5)]
                  (let [n (count (filter #(and (= b (first %))
                                               (= r (second %)))
                                         locations))]
-                   {:board b :row r :count n}))
+                   {:board b :count n}))
         hits (filter #(= 5 (:count %)) counts)]
     (if (empty? hits)
       false
       (first hits))))
 
-
 (defn check-columns
-  "Count the filled columns across the boards"
+  "Count the filled columns across the given locations.
+  Return the matching locations if a column is filled."
   [locations nboards]
   (let [counts (for [b (range nboards)
                      c (range 5)]
                  (let [n (count (filter #(and (= b (first %))
                                               (= c (util/third %)))
                                         locations))]
-                   {:board b :col c :count n}))
+                   {:board b :count n}))
         hits (filter #(= 5 (:count %)) counts)]
     (if (empty? hits)
       false
       (first hits))))
 
 (defn check-rows-columns
+  "Check all rows and columns across the given locations."
   [locations nboards]
   (let [result (check-rows locations nboards)]
     (if (false? result)
@@ -88,41 +90,74 @@
 
 (defn draw-numbers
   "Draw numbers and match against the boards.
-  When there is a filled row or column then return the matched number, the board and row, and all the matched locations so far on that board."
-  [numbers locations]
-  (let [nboards (/ (count locations) 25)]
-    (reduce (fn [s n]
-             (let [new-s (into s (find-value locations n))]
-               (if-let [locs (check-rows-columns new-s nboards)]
-                 (reduced (into {:number n :matches (filter #(= (:board locs) (first %)) new-s)}
-                                locs))
-                 new-s)))
-           []
-           numbers)))
+  When there is a filled row or column then return the matched number, the board and row,
+  and all the matched locations so far on that board."
+  [{:keys [:numbers :boards :nboards]}]
+  (reduce (fn [matches n]
+            (let [matches' (into matches (find-value boards n))
+                  hits (check-rows-columns matches' nboards)]
+              (if (false? hits)
+                matches'
+                (reduced (into {:number n :matches matches'} hits)))))
+          []
+          numbers))
 
 (defn score
   "Work out the score for the given match"
   [{:keys [:number :board :matches]} all-locations]
   (let [all-board (into {} (filter #(= board (first (first %1))) all-locations))
+        board-matches (filter #(= board (first %)) matches)
         remaining-locs (set/difference (set (keys all-board))
-                                       (set matches))]
-    ;; (println (select-keys all-board remaining-locs))
+                                       (set board-matches))]
     (->> remaining-locs
          (select-keys all-board)
          vals
          (apply +)
          (* number))))
 
+(defn remove-board
+  "Remove the given board from the enumerated locations."
+  [b enum]
+  (into {} (remove #(= b (first (first %))) enum)))
+
+
+(defn init-state
+  [{:keys [:numbers :boards] :as state}]
+  {:numbers numbers
+   :boards (enumerate-matrix boards)
+   :matches []
+   :nboards (count boards)})
+
+(defn remaining-boards
+  "Which boards are left in the enumeration?"
+  [boards]
+  (->> boards
+       (map #(first (first %)))
+       (sort <)
+       dedupe))
+
 ;;--------------------------------
 (defn part1
   [f]
-  (let [game (read-game f)
-        all-locs (enumerate-matrix (:boards game))
-        result (draw-numbers (:numbers game) all-locs)]
-    ;; (println result)
-    (score result all-locs)))
+  (let [state (init-state (read-game f))
+        result (draw-numbers state)]
+    (println result)
+    (score result (:boards state))))
 
 (defn part2
-  [f])
+  [f]
+  (let [initial-state (init-state (read-game f))]
+    (reduce (fn [state _]
+              (let [result (draw-numbers state)
+                    state (-> state
+                              (update :boards #(remove-board (:board result) %))
+                              (update :nboards dec)
+                              (assoc :matches (:matches result)))]
+                (println (:board result) (:number result))
+                (if (= 1 (:nboards state))
+                  (reduced (draw-numbers state))
+                  state)))
+            initial-state
+            (:numbers initial-state))))
 
 ;; The End

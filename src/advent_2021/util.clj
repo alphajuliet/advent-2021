@@ -118,4 +118,9 @@
   [f coll]
   (reduce-kv (fn [m k v] (assoc m k (f v))) (empty coll) coll))
 
+(defn remove-keys
+  "Opposite of select-keys"
+  [m ks]
+  (select-keys m (remove #(contains? (set ks) %) (keys m))))
+
 ;; The End
