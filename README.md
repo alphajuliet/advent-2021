@@ -49,6 +49,10 @@ For dealing with diagonal lines in part 2, I chose to rewrite the core function 
 
 At a first pass, this looks simple enough, and part 1 certainly is. Just seed a vector from the input file, and update it against the rules for the given number of days, and count the number of items at the end. Easy. Then you get to part 2 and realise that this function is a slow exponential, and while the number of elements at 80 days is reasonable, the values at 256 days will blow your modest RAM on the _test_ set. After some thinking you realise that there is a better way: you don't need to keep the whole vector, you just need to keep the _counts_ of each value. So I refactored my initial solution to the new approach, and the part 2 answer popped out in a couple of milliseconds on my electronic abacus.
 
+### Day 7
+
+Both parts of this are easy: we're looking for the minimum of a vector of calculated numbers. In part 1, it's a simple linear function, in part 2 it's over a sum to n, which has a simple closed form solution.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
