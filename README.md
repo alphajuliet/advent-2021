@@ -43,6 +43,12 @@ I'm really close to the answer in part 2. I can get down to the finding the seco
 Finding overlapping points between different line segments in 2D integer space is a nice little puzzle once you've parsed the input into endpoints. 
 I could also leverage some code I used in Advent 2019 to solve Part 1.
 
+For dealing with diagonal lines in part 2, I chose to rewrite the core function with a brute-force approach that although simpler, takes longer. But it gets the answer, even if you have to wait.
+
+### Day 6
+
+At a first pass, this looks simple enough, and part 1 certainly is. Just seed a vector from the input file, and update it against the rules for the given number of days, and count the number of items at the end. Easy. Then you get to part 2 and realise that this function is a slow exponential, and while the number of elements at 80 days is reasonable, the values at 256 days will blow your modest RAM on the _test_ set. After some thinking you realise that there is a better way: you don't need to keep the whole vector, you just need to keep the _counts_ of each value. So I refactored my initial solution to the new approach, and the part 2 answer popped out in a couple of milliseconds on my electronic abacus.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
