@@ -51,7 +51,13 @@ At a first pass, this looks simple enough, and part 1 certainly is. Just seed a 
 
 ### Day 7
 
-Both parts of this are easy: we're looking for the minimum of a vector of calculated numbers. In part 1, it's a simple linear function, in part 2 it's over a sum to n, which has a simple closed form solution.
+Both parts of this are easy: we're looking for the minimum of a vector of calculated numbers. In part 1, it's a simple linear function, in part 2 it's over a sum to n, which has a simple closed form solution. Because this is so easy, the next day will be hard.
+
+### Day 8
+
+And it is. Part 1 is fine, it's a straightforward exercise to calculate some frequencies, extract the ones we need, and count the elements. Part 2 is the problem. Intuitively, this seems like an [exact cover](https://en.wikipedia.org/wiki/Exact_cover) problem but I'm struggling to map the problem to that representation, and then use Knuth's Algorithm X to solve it. 
+
+I can think of an alternative brute force approach that finds which permutation of segment swaps gives the output when multiplied by the original map but that will take a while. This is another one I'm going to pass on, and maybe come back to later on.
 
 ## License
 

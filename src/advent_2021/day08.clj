@@ -8,16 +8,40 @@
 
 (defn read-patterns
   [f]
-  (as-> f <>
-    (util/import-data <>)
-    (map #(str/split % #"\s+\|\s+") <>)
-    (util/mapmap #(str/split % #"\s+") <>)))
+  (->> f
+    (util/import-data)
+    (map #(str/split % #"\s+\|\s+"))
+    (util/mapmap #(str/split % #"\s+"))))
+
+;; The map from digits 0-9 (rows) to segments a-g (columns)
+(def R [[1 1 1 0 1 1 1] ;0
+        [0 0 1 0 0 1 0] ;1
+        [1 0 1 1 1 0 1] ;2
+        [1 0 1 1 0 1 1] ;3
+        [0 1 1 1 0 1 0] ;4
+        [1 1 0 1 0 1 1] ;5
+        [1 1 0 1 1 1 1] ;6
+        [1 0 1 0 0 1 0] ;7
+        [1 1 1 1 1 1 1] ;8
+        [1 1 1 1 0 1 1]]) ;9
+
+;; Test data result, to experiment with.
+(def X [[1 1 1 1 1 1 1]
+        [0 1 1 1 1 1 0]
+        [1 0 1 1 0 1 1]
+        [1 1 1 1 0 1 0]
+        [1 1 0 1 0 0 0]
+        [1 1 1 1 1 1 0]
+        [0 1 1 1 1 1 1]
+        [1 1 0 0 1 1 0]
+        [1 1 1 1 1 0 1]
+        [1 1 0 0 0 0 0]])
 
 (defn part1
   [f]
   (->> f
       read-patterns
-      (util/mapmap #(map count %))
+      (util/mapmap (partial map count))
       (map second)
       (apply concat)
       frequencies
