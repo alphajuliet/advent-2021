@@ -111,7 +111,7 @@
 (defn mapmap
   "Do a deep map of 2-level structure."
   [f x]
-  (map (fn [y] (map f y)) x))
+  (mapv (fn [y] (mapv f y)) x))
 
 (defn map-kv
   "Map f over the values of a map."
@@ -122,5 +122,10 @@
   "Opposite of select-keys"
   [m ks]
   (select-keys m (remove #(contains? (set ks) %) (keys m))))
+
+(defn clamp
+  "Clamp values between a and b"
+  [x a b]
+  (min b (max x a)))
 
 ;; The End
