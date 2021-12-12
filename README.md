@@ -59,6 +59,12 @@ And it is. Part 1 is fine, it's a straightforward exercise to calculate some fre
 
 I can think of an alternative brute force approach that finds which permutation of segment swaps gives the output when multiplied by the original map but that will take a while. This is another one I'm going to pass on, and maybe come back to later on.
 
+### Day 9
+
+The obvious way to solve part 1 is to brute force a search over each cell, comparing it with its neighbours while handling the edges, and that's indeed what we did here. It duly returns the local minima across the matrix.
+
+For part 2 we need to map out the size of the basins that encircle each local minima. This is equivalent to a flood fill of an area, and a quick search of flood fill algorithms confirms that recursion is a reasonable way to do this for a matrix of this size. Because I'm working with pure functions and immutable data, we need to pass some state up and down the recursion stack, to keep track of what we've already visited and counted. A little complicated, but I'm pleased with the result in 100 lines of functional code.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
