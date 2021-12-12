@@ -5,5 +5,6 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/math.combinatorics "0.1.6"]
+                 [instaparse "1.4.10"]
                  [net.mikera/core.matrix "0.62.0"]]
   :repl-options {:init-ns advent-2021.util})

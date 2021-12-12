@@ -65,6 +65,12 @@ The obvious way to solve part 1 is to brute force a search over each cell, compa
 
 For part 2 we need to map out the size of the basins that encircle each local minima. This is equivalent to a flood fill of an area, and a quick search of flood fill algorithms confirms that recursion is a reasonable way to do this for a matrix of this size. Because I'm working with pure functions and immutable data, we need to pass some state up and down the recursion stack, to keep track of what we've already visited and counted. A little complicated, but I'm pleased with the result in 100 lines of functional code.
 
+### Day 10
+
+We get to wheel out the parser for this one, so I reach for `instaparse`. Once we define the input grammar, we can find the errors in the part 1 strings easily, although it does require some thought to confirm what an "incomplete" line is. Luckily, the parser gives us a clue.
+
+Part 2 is not quite as easy because the parser won't fix your errors for you. So we incrementally find the next expected character, append it to the string, and try parsing it again until it passes. Then we work out what we appended and score it.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
