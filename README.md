@@ -71,6 +71,10 @@ We get to wheel out the parser for this one, so I reach for `instaparse`. Once w
 
 Part 2 is not quite as easy because the parser won't fix your errors for you. So we incrementally find the next expected character, append it to the string, and try parsing it again until it passes. Then we work out what we appended and score it.
 
+### Day 11
+
+Here we have to deal with flashing octopuses, but luckily a numeric matrix is a sufficient model. This one is about iterating until a fixed point is reached, but there are three nested iterations involved, which, because I'm being functional, involves three reductions (or folds) that maintain state. Part 1 took me a while to work through the nested loops and the logic. In constrast, part 2 only took a few additional lines of code to get the answer. This is one of the few occasions that the second part is relatively simple compared to the first.
+
 ## License
 
 Copyright © 2021 Andrew Joyner

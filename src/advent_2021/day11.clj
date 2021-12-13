@@ -105,16 +105,28 @@
   "Run n steps across the matrix."
   [n mat]
   (let [state {:mat mat :total 0}]
-    (reduce (fn [st _]
-              (step st))
+    (reduce (fn [st i]
+              (let [st' (step st)]
+                (if (m/zero-matrix? (:mat st'))
+                  (reduced {:step i})
+                  st')))
             state
             (range n))))
 
+;;--------------------------------
 (defn part1
   [f]
   (->> f
        read-cavern
        (run-steps 100)
        :total))
+
+(defn part2
+  [f]
+  (->> f
+       read-cavern
+       (run-steps 1000)
+       :step
+       inc))
 
 ;; The End
