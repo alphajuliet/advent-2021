@@ -1,6 +1,6 @@
 (ns advent-2021.day13
   (:require [advent-2021.util :as util]
-            [ubergraph.core :as uber]
+            [clojure.core.matrix :as m]
             [clojure.string :as str]))
 
 ;;--------------------------------
@@ -40,20 +40,42 @@
     [x (- b (Math/abs (- b y)))]))
 
 (defn process
-  "Process the data points through the folds."
+  "Process the data points through the first fold."
   [data]
   (let [points (remove nil? (map :point data))
         folds (remove nil? (map :fold data))]
     (map #(fold % (first folds)) points)))
 
-#_(defn process-2
+(defn process-2
+  "Process the data points through all the folds."
   [data]
   (let [points (remove nil? (map :point data))
         folds (remove nil? (map :fold data))]
-    (reduce (fn [p f]
-              (map #(fold % f) p))
+    (reduce (fn [p f] (map #(fold % f) p))
             points
             folds)))
+
+(defn viz
+  "Mapping of matrix to readable characters"
+  [v]
+  (if (zero? v) " " "#"))
+
+(defn points->matrix
+  "Set a collection of points to 1 in a zero matrix."
+  [points]
+  (let [max-x (inc (apply max (map first points)))
+        max-y (inc (apply max (map second points)))]
+    (reduce (fn [m [x y]] (m/mset m y x 1))
+            (m/zero-matrix max-y max-x)
+            points)))
+
+(defn viz-matrix
+  "Visualise a binary matrix."
+  [m]
+  (let [m1 (util/mapmap viz m)
+        m2 (map (partial str/join "") m1)]
+    (doseq [x m2]
+      (println x))))
 
 (defn part1
   [f]
@@ -62,5 +84,14 @@
        process
        distinct
        count))
+
+(defn part2
+  [f]
+  (->> f
+       read-instructions
+       process-2
+       distinct
+       points->matrix
+       viz-matrix))
 
 ;; The End

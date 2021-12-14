@@ -92,6 +92,13 @@ Luckily, I had some working Racket code for `find-all-paths` that I could migrat
 
 For part 2, it's not enough to have a binary decision on whether we've visited a cave before; we need to maintain a count, and use that to decide on if we're allowed to visit it again. We then add a series of rules to determine whether we can add the node.
 
+## Day 13
+
+This is an interesting one: mapping points across several folds in the plane. I thought this might get harder, but it was straightforward. The challenge was to find an expression that maps a point to a new point from the action of a fold. This is captured in the `fold` function. Reading in the input data is a bit fiddly but once you have the points and folds, you run all the points through a single fold and remove the duplicates. 
+
+For part 2, we need to run the points through all the folds, which is trivial, and then visualise the resulting array of points. We mess about with making a matrix and turning it into strings, so that we can see the resulting answer code.
+This one was quite fun.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
