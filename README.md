@@ -99,6 +99,15 @@ This is an interesting one: mapping points across several folds in the plane. I 
 For part 2, we need to run the points through all the folds, which is trivial, and then visualise the resulting array of points. We mess about with making a matrix and turning it into strings, so that we can see the resulting answer code.
 This one was quite fun.
 
+## Day 14
+
+This is an exercise is string generation by rules: the opposite of parsing. In part 1, we can expand the string by partitiong the string into overlapping pairs and inserting a new characater according to the rule set.
+
+In part 2, we hit the curse of exponential growth again, like on Day 6. What works for 10 iterations will easily blow your memory for 40.
+Like in Day 6, the clue is in the question: we need to calculate the difference in counts, which means we need to find a way of not holding the whole string at each step. We can do this by maintaining a map of counts of each pair, and counting the new generated pairs. 
+At the end we need to extract the answer from the counts with a bit of data munging. It's a large number but it pops out pretty quickly.
+I ended up refactoring my part 1 solution for part 2 using the new approach, but it still gives the right answer for both.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
