@@ -108,6 +108,14 @@ Like in Day 6, the clue is in the question: we need to calculate the difference 
 At the end we need to extract the answer from the counts with a bit of data munging. It's a large number but it pops out pretty quickly.
 I ended up refactoring my part 1 solution for part 2 using the new approach, but it still gives the right answer for both.
 
+## Day 15
+
+I've not really done this puzzle justice, because search is challenging topic and I naturally shy away from it. 
+So, once I worked out this was a maze solving problem, and that the A* algorithm is a good solution, I lifted a solution from "The Joy of Clojure", which got me the answer to part 1 quickly. 
+Somewhat worryingly, it took a little time to calculate it, so that when part 2 came along with a 25-times larger search space, I knew I'd have to find a better way. 
+The trouble is that I don't pretend to understand the A* algorithm, so I'm struggling to tailor it to the problem at hand. I also can't get the right answer using the test data for part 2, so I'm already in trouble.
+In the interests of moving on, I'm leaving this one "for later". That means I may or may not come back to it, but this one is not so fun.
+
 ## License
 
 Copyright © 2021 Andrew Joyner

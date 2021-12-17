@@ -15,7 +15,8 @@
        (util/mapmap #(Integer/parseInt %))))
 
 (defn neighbours
-  "Find all neighbours of a given point. From Joy of Clojure."
+  "Find all neighbours of a given point. From Joy of Clojure.
+  We only need to look to the right and down in our case."
   ([size yx]
    (neighbours [[-1 0] [1 0] [0 -1] [0 1]] size yx))
   ([deltas size yx]
@@ -55,11 +56,8 @@
         (let [[_ yx :as work-item] (first work-todo)
               rest-work-todo (disj work-todo work-item)
               nbr-yxs (neighbours size yx)
-              cheapest-nbr (min-by :cost
-                                   (keep #(get-in routes %)
-                                         nbr-yxs))
-              newcost (path-cost (get-in cell-costs yx)
-                                 cheapest-nbr)
+              cheapest-nbr (min-by :cost (keep #(get-in routes %) nbr-yxs))
+              newcost (path-cost (get-in cell-costs yx) cheapest-nbr)
               oldcost (:cost (get-in routes yx))]
           (if (and oldcost (>= newcost oldcost))
             (recur (inc steps) routes rest-work-todo)
@@ -72,6 +70,17 @@
                          (map (fn [[y x :as w]] [(total-cost newcost step-est size y x) w])
                               nbr-yxs)))))))))
 
+(defn x-mod [x] (= x 10) 1 x)
+
+(defn create-large-grid
+  "Create the large grid in part 2"
+  [g]
+  (let [[x y] (m/shape g)]
+    (m/reshape (for [i (range 5)
+                     j (range 5)]
+                 (m/emap #(x-mod (+ % i j)) g))
+               [(* 5 x) (* 5 y)])))
+
 ;;--------------------------------
 (defn part1
   [f]
@@ -80,7 +89,15 @@
     (-> grid
         (a-star [0 0] 10)
         (get-in [0 :cost])
-        (util/swap - start-val))))
+        (- start-val))))
 
+(defn part2
+  [f]
+  (let [grid (create-large-grid (read-levels f))
+        start-val (m/mget grid 0 0)]
+    (-> grid
+        (a-star [0 0] 10)
+        #_(get-in [0 :cost])
+        #_(- start-val))))
 
 ;; The End
