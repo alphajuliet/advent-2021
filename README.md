@@ -116,6 +116,17 @@ Somewhat worryingly, it took a little time to calculate it, so that when part 2 
 The trouble is that I don't pretend to understand the A* algorithm, so I'm struggling to tailor it to the problem at hand. I also can't get the right answer using the test data for part 2, so I'm already in trouble.
 In the interests of moving on, I'm leaving this one "for later". That means I may or may not come back to it, but this one is not so fun.
 
+## Day 16
+
+This puzzle is another parsing opportunity, so we reach again for `instaparse`. 
+We create a grammar for the binary stream of characters from the instructions and with some quick and dirty manipulations we can grab all the versions and add them up for the answer to part 1.
+
+However, there is a buried problem in here, and that is the matter of the variable lengths of the subpackets. 
+There is a length field that tells you how many to expect, and ignoring that messes with the tokenisation of at least one of the test data cases. 
+This is not a matter of precedence, you actually need that length to be able to correctly bracket the following literals.
+Now, that is outside of ENBF's power in the general case, and so would require inserting some custom logic in the parsing  However, `instaparse`, as far as I can tell, won't let me do that, and I'm not inclined to create a parser from scratch. That's a shame, because `instaparse` has a lovely little function called `transform` that lets you walk the output tree and evaluate it from the bottom up to get the answer. 
+My code works on most test cases, but not all, and certainly not on the input data. I'll sit this one out.
+
 ## License
 
 Copyright © 2021 Andrew Joyner

@@ -36,17 +36,29 @@
 
 (def packet
   ;; Grammar for packets
+
+  ;; <Op> := Calculate
+  ;; <Calculate> := Compare | Sum | Product | Minimum | Maximum
+  ;; <Compare> := GreaterThan | LessThan | EqualTo
   (insta/parser
-   "S := Packet Padding?
-    Packet := Ver (Lit | Op)
+   "S := Packet <Padding?>
+    <Packet> := <Ver> (Lit | Op)
     Ver := #'[01]{3}'
 
-    Op := <OpType> <Len> Packet*
-    <OpType> := '000' | '001' | '010' | '011' | '101' | '110' | '111'
-    <Len> := ('0' #'[01]{15}') | ('1' #'[01]{11}')
+    <Op> := Sum | Product | Minimum | Maximum | GreaterThan | LessThan | EqualTo
+    Len := LenBits | LenSubP
+    LenBits := <'0'> #'[01]{15}'
+    LenSubP := <'1'> #'[01]{11}'
 
-    Lit := <LitType> LitNF* LitF
-    <LitType> := '100'
+    Sum           := <'000'> <Len> Packet+
+    Product       := <'001'> <Len> Packet+
+    Minimum       := <'010'> <Len> Packet+
+    Maximum       := <'011'> <Len> Packet+
+    GreaterThan   := <'101'> <Len> Packet Packet
+    LessThan      := <'110'> <Len> Packet Packet
+    EqualTo       := <'111'> <Len> Packet Packet
+
+    Lit := <'100'> LitNF* LitF
     <LitNF> := #'1[01]{4}+'
     <LitF>  := #'0[01]{4}'
 
@@ -65,11 +77,35 @@
        (filter number?)
        (apply +)))
 
+(defn bool->int [b] (if (true? b) 1 0))
+
+(defn eval-tree
+  "Evaluate the tree"
+  [tree]
+  (insta/transform
+   {:S identity
+    :Lit #(Integer/parseInt % 2)
+    :Sum +
+    :Product *
+    :Minimum min
+    :Maximum max
+    :GreaterThan (comp bool->int >)
+    :LessThan (comp bool->int <)
+    :EqualTo (comp bool->int =)}
+   tree))
+
 (defn part1
   [f]
   (->> f
        read-packet
        packet
        sum-versions))
+
+(defn part2
+  [f]
+  (->> f
+       read-packet
+       packet
+       eval-tree))
 
 ;; The End
