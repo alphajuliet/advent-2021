@@ -1,7 +1,6 @@
 (ns advent-2021.day16
   (:require [advent-2021.util :as util]
             [instaparse.core :as insta]
-            [clojure.zip :as zip]
             [clojure.string :as str]))
 
 ;;--------------------------------

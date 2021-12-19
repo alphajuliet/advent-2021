@@ -118,14 +118,16 @@ In the interests of moving on, I'm leaving this one "for later". That means I ma
 
 ## Day 16
 
-This puzzle is another parsing opportunity, so we reach again for `instaparse`. 
-We create a grammar for the binary stream of characters from the instructions and with some quick and dirty manipulations we can grab all the versions and add them up for the answer to part 1.
+This puzzle provides another parsing opportunity, so we reach again for [instaparse](https://github.com/engelberg/instaparse). 
+We create a grammar for the binary stream of characters from the instructions and after some parsing and quick and dirty manipulations we can grab all the version numbers and add them up for the answer to part 1.
 
-However, there is a buried problem in here, and that is the matter of the variable lengths of the subpackets. 
+However, there is a lurking problem in here in part 2, and that is the matter of the variable number of subpackets. 
 There is a length field that tells you how many to expect, and ignoring that messes with the tokenisation of at least one of the test data cases. 
 This is not a matter of precedence, you actually need that length to be able to correctly bracket the following literals.
-Now, that is outside of ENBF's power in the general case, and so would require inserting some custom logic in the parsing  However, `instaparse`, as far as I can tell, won't let me do that, and I'm not inclined to create a parser from scratch. That's a shame, because `instaparse` has a lovely little function called `transform` that lets you walk the output tree and evaluate it from the bottom up to get the answer. 
-My code works on most test cases, but not all, and certainly not on the input data. I'll sit this one out.
+Now, that is outside of the power of ENBF in the general case, and so would require inserting some custom logic in the parsing.  However, `instaparse`, as far as I can tell, won't let me do that, and I'm not inclined to create a parser from scratch. That's a shame, because `instaparse` has a lovely little function called `transform` that lets you walk the output tree and evaluate it from the bottom up to get the answer. 
+My code works on most test cases, but not all, and certainly not on the input data. 
+I'll sit this one out. 
+That's two puzzles in a row that I haven't finished; they are certainly getting harder.
 
 ## License
 
