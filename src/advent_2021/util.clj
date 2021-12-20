@@ -128,4 +128,14 @@
   [x a b]
   (min b (max x a)))
 
+(defn argmax
+  "Return the value x in xs that maximises (f x)."
+  [f xs]
+  (apply max-key f xs))
+
+(defn argmin
+  "Return the value x in xs that minimises (f x)."
+  [f xs]
+  (apply min-key f xs))
+
 ;; The End
