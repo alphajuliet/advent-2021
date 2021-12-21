@@ -129,6 +129,23 @@ My code works on most test cases, but not all, and certainly not on the input da
 I'll sit this one out. 
 That's two puzzles in a row that I haven't finished; they are certainly getting harder.
 
+## Day 17
+
+This one is harder than it looks. It requires some modelling of the movement of an object in a space with gravity and air resistance.
+The test data here is crucial to making sure you've included all the initial velocity combinations, but there is still some trial-and-error involved to tweak the edge conditions.
+For part 1, we need to consider launching the probe up in the air and checking if it lands on the target at an integer time. This requires working out the bounding box of velocities that you need to search through because the total space is too large. Finding the maximum is easy after that.
+
+Part 2 required a lot of trial and error. 
+It came down to determining that there are three zones or bounding boxes for the velocities that can hit the target: 
+
+1. Direct shots on the target at high velocity 
+2. Slower ones at a horizontal or slightly downward velocity
+3. Upwards (like in part 1) that will drop vertically on the target
+
+Defining these bounding boxes takes some work, and a bit of experimentation to see whether growing them slightly increases the number of successful points (yes, it does). 
+In the end the total stopped increasing, and so we got there. 
+It's good to get another star for a part 2.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
