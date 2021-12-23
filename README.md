@@ -146,6 +146,18 @@ Defining these bounding boxes takes some work, and a bit of experimentation to s
 In the end the total stopped increasing, and so we got there. 
 It's good to get another star for a part 2.
 
+## Day 18
+
+These snailfish do strange things with pairs, but we can see that they are really binary trees, and so we're up for some tree-walking. 
+Reading them in from the input is made easy with `instaparse`, which produces a nice labelled tree of nodes.
+There are four operations defined on a tree: `add`, `magnitude`, and `split` are all straightforward. 
+`add` is just a making a new tree. The `magnitude` function makes use (again) of the nifty `transform` function in `instaparse`. 
+The `split` function relies on the `specter` library to do a neat in-place transform. 
+That leaves us with `explode`, which needs does a weird bidirectional add across the tree. 
+This implies a breadth-first recursive search, otherwise we won't yet have seen the nodes higher up the tree that we need to add to.
+There are cool Clojure functions for walking a recursively-defined sequence (like `walk` and `tree-seq`) but I've not used them and so my skill in coding that up is thin.
+While it's a little disappointing to miss a first star, I'm going to skip this day until I've played some more with trees. 
+
 ## License
 
 Copyright © 2021 Andrew Joyner
