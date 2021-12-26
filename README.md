@@ -158,6 +158,17 @@ This implies a breadth-first recursive search, otherwise we won't yet have seen 
 There are cool Clojure functions for walking a recursively-defined sequence (like `walk` and `tree-seq`) but I've not used them and so my skill in coding that up is thin.
 While it's a little disappointing to miss a first star, I'm going to skip this day until I've played some more with trees. 
 
+## Day 19
+
+This one is also difficult from the start. My take is that we have a bunch of points seen from different reference points and orientations in 3D space and we need to work out the common points based on their relationships with each other, in terms of difference vectors. 
+This will end up involving a lot of matrix dimensions and manipulations, and while I've done some of the basics, I've run out of energy to grind this one out, even part 1.
+
+## Conclusion
+
+So, I'm resigning the advent calendar at this point. It's been fun, and I made it to day 17. 
+Arguably, I'm a marginally better Clojure coder than when I started, and I've picked up a few techniques along the way.
+I may now go and look at others' solutions, and see where I could have improved my code, or applied a better algorithm in places.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
