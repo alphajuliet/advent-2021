@@ -63,6 +63,8 @@ And it is. Part 1 is fine, it's a straightforward exercise to calculate some fre
 
 I can think of an alternative brute force approach that finds which permutation of segment swaps gives the output when multiplied by the original map but that will take a while. This is another one I'm going to pass on, and maybe come back to later on.
 
+Update: I have solved Part 2 using [Todd Ginsberg's clever technique](https://todd.ginsberg.com/post/advent-of-code/2021/day8/) that uses the insight of segment coverings to solve for each digit. I still would have preferred to solve it generically, i.e. for any number and arrangement of segments, but there are times when you just need a specific solution to a specific problem.
+
 ## Day 9
 
 The obvious way to solve part 1 is to brute force a search over each cell, comparing it with its neighbours while handling the edges, and that's indeed what we did here. It duly returns the local minima across the matrix.
