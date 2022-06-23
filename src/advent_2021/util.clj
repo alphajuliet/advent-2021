@@ -118,6 +118,11 @@
   [f coll]
   (reduce-kv (fn [m k v] (assoc m k (f v))) (empty coll) coll))
 
+(defn map-key
+  "Map g over all keys in m"
+  [g m]
+  (into {} (map (juxt (comp g key) val)) m))
+
 (defn remove-keys
   "Opposite of select-keys"
   [m ks]
