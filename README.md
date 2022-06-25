@@ -42,6 +42,8 @@ I can get down to the finding the second-last winning board, but haven't quite g
 There is some subtle error in my code that is holding me back. 
 I am putting this one on hold, and maybe I'll come back to it.
 
+Update: Ok, I found my error, fixed it, and solved part 2 of the puzzle. My solution could be optimised but it gets the answer.
+
 ## Day 5
 
 Finding overlapping points between different line segments in 2D integer space is a nice little puzzle once you've parsed the input into endpoints. 

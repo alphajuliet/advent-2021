@@ -98,6 +98,7 @@
                   hits (check-rows-columns matches' nboards)]
               (if (false? hits)
                 matches'
+                ;; else
                 (reduced (into {:number n :matches matches'} hits)))))
           []
           numbers))
@@ -126,15 +127,8 @@
   {:numbers numbers
    :boards (enumerate-matrix boards)
    :matches []
+   :boards-remaining (count boards)
    :nboards (count boards)})
-
-(defn remaining-boards
-  "Which boards are left in the enumeration?"
-  [boards]
-  (->> boards
-       (map #(first (first %)))
-       (sort <)
-       dedupe))
 
 ;;--------------------------------
 (defn part1
@@ -149,14 +143,18 @@
   (let [initial-state (init-state (read-game f))]
     (reduce (fn [state _]
               (let [result (draw-numbers state)
-                    state (-> state
-                              (update :boards #(remove-board (:board result) %))
-                              (update :nboards dec)
-                              (assoc :matches (:matches result)))]
-                (println (:board result) (:number result))
-                (if (= 1 (:nboards state))
-                  (reduced (draw-numbers state))
-                  state)))
+                    ;; Remove the winning board
+                    state' (-> state
+                               (update :boards #(remove-board (:board result) %))
+                               (update :boards-remaining dec)
+                               (assoc :matches (:matches result)))]
+                ;; (println "board" (:board result) "eliminated with number" (:number result))
+                (if (zero? (:boards-remaining state'))
+                  ;; Score the remaining board
+                  (reduced
+                   (score result (:boards initial-state)))
+                  ;;else go again
+                  state')))
             initial-state
             (:numbers initial-state))))
 
