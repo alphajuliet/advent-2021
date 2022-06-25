@@ -64,22 +64,32 @@
             (recur (inc steps)
                    (assoc-in routes yx
                              {:cost newcost
-                              :yxs (conj (:yxs cheapest-nbr [])
-                                         yx)})
+                              :yxs (conj (:yxs cheapest-nbr []) yx)})
                    (into rest-work-todo
                          (map (fn [[y x :as w]] [(total-cost newcost step-est size y x) w])
                               nbr-yxs)))))))))
 
-(defn x-mod [x] (= x 10) 1 x)
+(defn- x-mod [x]
+  (if (> x 9)
+    (- x 9)
+    x))
+
+(defn- mextend
+  "Join n copies of m to itself along dimension dim"
+  [mat dim n]
+  (reduce (fn [m _]
+            (m/join-along dim mat m))
+          mat
+          (range n)))
 
 (defn create-large-grid
   "Create the large grid in part 2"
   [g]
-  (let [[x y] (m/shape g)]
-    (m/reshape (for [i (range 5)
-                     j (range 5)]
-                 (m/emap #(x-mod (+ % i j)) g))
-               [(* 5 x) (* 5 y)])))
+  (let [[x y] (m/shape g)
+        g' (-> g (mextend 0 4) (mextend 1 4))]
+    (m/emap-indexed (fn [[i j] v]
+                      (x-mod (+ v (Math/floorDiv i x) (Math/floorDiv j y))))
+                    g')))
 
 ;;--------------------------------
 (defn part1
@@ -97,7 +107,7 @@
         start-val (m/mget grid 0 0)]
     (-> grid
         (a-star [0 0] 10)
-        #_(get-in [0 :cost])
-        #_(- start-val))))
+        (get-in [0 :cost])
+        (- start-val))))
 
 ;; The End
