@@ -39,10 +39,10 @@
   (let [nn [[-1 -1] [-1 0] [-1 1]
             [ 0 -1] [ 0 0] [ 0 1]
             [ 1 -1] [ 1 0] [ 1 1]]
-        x (m/mget m r c)]
+        default (m/mget m r c)]
     (vec
      (for [[i j] nn]
-       (safe-mget m (+ r i) (+ c j) x)))))
+       (safe-mget m (+ r i) (+ c j) default)))))
 
 (defn create-matrix
   "Create a matrix from the list of cells of characters"
@@ -79,14 +79,41 @@
         vec
         (m/reshape [maxr maxc]))))
 
+(defn enhance2
+  "Use loop/recur instead of list comprehension. A little faster."
+  [algo m]
+  (let [[maxr maxc] (m/shape m)
+        m' (m/mutable m)]
+    (loop [i 0 j 0]
+      (if (< i maxr)
+        (if (< j maxc)
+          (do
+            (m/mset! m' i j (transform algo m [i j]))
+            (recur i (inc j)))
+          (recur (inc i) 0))
+        m'))))
+
 (defn part1
   [f]
   (let [{:keys [algo input]} (read-data f)]
     (->> input
          create-matrix
-         (enlarge 8)
+         (enlarge 4)
          (enhance algo)
          (enhance algo)
+         m/to-vector
+         (util/count-if pos?))))
+
+(defn part2
+  [f]
+  (let [{:keys [algo input]} (read-data f)
+        matrix (->> input
+                    create-matrix
+                    (enlarge 100))]
+    (->> (reduce (fn [m _]
+                   (enhance2 algo m))
+                 matrix
+                 (range 50))
          m/to-vector
          (util/count-if pos?))))
 

@@ -167,6 +167,10 @@ While it's a little disappointing to miss a first star, I'm going to skip this d
 This one is also difficult from the start. My take is that we have a bunch of points seen from different reference points and orientations in 3D space and we need to work out the common points based on their relationships with each other, in terms of difference vectors. 
 This will end up involving a lot of matrix dimensions and manipulations, and while I've done some of the basics, I've run out of energy to grind this one out, even part 1.
 
+## Day 20
+
+Once you properly understand the algorithm then this one comes down to some matrix manipulations based on local neighbourhoods. The trick is to expand the matrix enough to simulate the infinite field. This took a bit of grinding to get the answer in part 1, but then part 2 fell out easily by just iterating some more.
+
 ## Conclusion
 
 So, I'm resigning the advent calendar at this point. It's been fun, and I made it to day 17. 
