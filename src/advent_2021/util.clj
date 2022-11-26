@@ -1,6 +1,7 @@
 (ns advent-2021.util
   (:require [clojure.string :as str]
-            [clojure.pprint :as pp]))
+            [clojure.pprint :as pp]
+            [clojure.core.matrix :as m]))
 
 ;;--------------------------------
 (defn swap [f x y] (f y x))
@@ -23,6 +24,15 @@
 
 ;; Transpose a list of lists
 (def T (partial apply mapv vector))
+
+(defn zero-vector
+  [n]
+  (vec (repeat n 0)))
+
+(defn zero-matrix
+  [r c]
+  (-> (zero-vector (* r c))
+      (m/reshape [r c])))
 
 (defn binv->dec
   "Convert a binary vector to decimal"
@@ -107,6 +117,12 @@
       (if (pred (first s))
         (cons (first s) nil)
         (cons (first s) (take-until pred (rest s)))))))
+
+(def makev
+  (comp vec concat))
+
+(def repeatv
+  (comp vec repeat))
 
 (defn mapmap
   "Do a deep map of 2-level structure."
