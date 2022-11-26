@@ -177,6 +177,8 @@ So, I'm resigning the advent calendar at this point. It's been fun, and I made i
 Arguably, I'm a marginally better Clojure coder than when I started, and I've picked up a few techniques along the way.
 I may now go and look at others' solutions, and see where I could have improved my code, or applied a better algorithm in places.
 
+Update: I've completed Day 20.
+
 ## License
 
 Copyright © 2021 Andrew Joyner
