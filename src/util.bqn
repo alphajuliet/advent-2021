@@ -1,8 +1,9 @@
 # BQN utilities
 
-⟨StringToInt, ReadNumbers⟩⇐
+⟨StringToInt, ReadNumbers, SplitOn⟩⇐
 
 StringToInt ← 10⊸×⊸+˜´∘⌽-⟜'0'
 ReadNumbers ← StringToInt¨ ∘ •file.Lines
+SplitOn ← (⊢-˜+`×¬)∘=⊔⊢
 
 # The End
